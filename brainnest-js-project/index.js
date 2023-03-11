@@ -1,7 +1,12 @@
-const playOptions = ["ROCK", "PAPER", "SCISSORS"];
-
+const playOptions = {
+  ROCK: "ROCK",
+  PAPER: "PAPER",
+  SCISSORS: "SCISSORS",
+};
 function computerPlay() {
-  const play = playOptions[Math.floor(Math.random() * 3)];
+  const randInt = Math.floor(Math.random() * 3);
+  const options = Object.keys(playOptions);
+  const play = playOptions[options[randInt]];
   console.log("Computer played: ".concat(play));
   return play;
 }
@@ -10,7 +15,7 @@ function playRound(playerSelection, computerSelection) {
   if (!playerSelection) return { msg: "You lose! No selection", win: false };
   const player = playerSelection.toUpperCase();
   const computer = computerSelection.toUpperCase();
-  if (!playOptions.includes(player))
+  if (!playOptions.hasOwnProperty(player))
     return { msg: "You lose! Invalid selection", win: false };
   if (player === "ROCK" && computer === "SCISSORS") {
     return { msg: "You win! Rock beats Scissors", win: true };
