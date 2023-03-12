@@ -11,10 +11,8 @@ function computerPlay() {
   return play;
 }
 
-function playRound(playerSelection, computerSelection) {
-  if (!playerSelection) return { msg: "You lose! No selection", win: false };
-  const player = playerSelection.toUpperCase();
-  const computer = computerSelection.toUpperCase();
+function playRound(player, computer) {
+  if (!player) return { msg: "You lose! No selection", win: false };
   if (!playOptions.hasOwnProperty(player))
     return { msg: "You lose! Invalid selection", win: false };
   if (player === "ROCK" && computer === "SCISSORS") {
@@ -39,8 +37,16 @@ function game() {
   let losses = 0;
   let ties = 0;
   for (let i = 0; i < 5; i++) {
-    const playerSelection = prompt("Rock, paper, scissors: ");
-    const { msg, win } = playRound(playerSelection, computerPlay());
+    const playerSelection = prompt(
+      "Rock, paper, scissors. Enter cancel to stop"
+    );
+    const player = playerSelection.toUpperCase();
+    const computer = computerPlay().toUpperCase();
+    if (player == "CANCEL") {
+      console.log("You cancelled! These are the scores so far");
+      break;
+    }
+    const { msg, win } = playRound(player, computer);
     console.log(msg);
     if (win) wins++;
     else if (win === false) losses++;
